@@ -42,16 +42,8 @@
       "url": "http://127.0.0.1:3845/mcp"
     },
     "supabase": {
-      "command": "npx",
-      "args": [
-        "-y",
-        "@supabase/mcp-server"
-      ],
-      "env": {
-        "SUPABASE_URL": "https://ixdskleupuprxlcxiakh.supabase.co",
-        "SUPABASE_ANON_KEY": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Iml4ZHNrbGV1cHVwcnhsY3hpYWtoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTk3OTQ5MDcsImV4cCI6MjA3NTM3MDkwN30.dv3ZpjVOinpd1FxqjjeNTjNFLTCQDdiUXoCy0augKKc",
-        "SUPABASE_SERVICE_ROLE_KEY": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Iml4ZHNrbGV1cHVwcnhsY3hpYWtoIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc1OTc5NDkwNywiZXhwIjoyMDc1MzcwOTA3fQ.OasMVzKdFHiKrCN7PjTwtALWqHeqeYjKa50kCC73yI8"
-      }
+      "type": "http",
+      "url": "https://mcp.supabase.com/mcp"
     }
   },
   "inputs": [
