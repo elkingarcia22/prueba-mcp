@@ -33,20 +33,33 @@ export default function RootLayout({
           {/* Microsoft Clarity Analytics */}
           {process.env.NEXT_PUBLIC_CLARITY_PROJECT_ID && 
            process.env.NEXT_PUBLIC_CLARITY_PROJECT_ID !== 'your_clarity_project_id_here' ? (
+            <>
+              <Script 
+                id="ms-clarity" 
+                strategy="afterInteractive"
+                dangerouslySetInnerHTML={{ 
+                  __html: `
+                    console.log('🔍 Clarity Project ID:', "${process.env.NEXT_PUBLIC_CLARITY_PROJECT_ID}");
+                    (function(c,l,a,r,i,t,y){
+                      c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+                      t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+                      y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+                    })(window, document, "clarity", "script", "${process.env.NEXT_PUBLIC_CLARITY_PROJECT_ID}");
+                  `
+                }}
+              />
+            </>
+          ) : (
             <Script 
-              id="ms-clarity" 
+              id="clarity-debug" 
               strategy="afterInteractive"
               dangerouslySetInnerHTML={{ 
                 __html: `
-                  (function(c,l,a,r,i,t,y){
-                    c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-                    t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-                    y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-                  })(window, document, "clarity", "script", "${process.env.NEXT_PUBLIC_CLARITY_PROJECT_ID}");
+                  console.log('❌ Clarity no configurado. Project ID:', "${process.env.NEXT_PUBLIC_CLARITY_PROJECT_ID || 'undefined'}");
                 `
               }}
             />
-          ) : null}
+          )}
                     </ThemeProvider>
       </body>
     </html>
