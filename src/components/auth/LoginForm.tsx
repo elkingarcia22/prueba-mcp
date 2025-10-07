@@ -22,6 +22,7 @@ import {
 import { ViewIcon, ViewOffIcon, SunIcon, MoonIcon } from '@chakra-ui/icons';
 import { supabase } from '../../lib/supabase';
 import { useRouter } from 'next/navigation';
+import bcrypt from 'bcryptjs';
 
 export const LoginForm: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -40,32 +41,62 @@ export const LoginForm: React.FC = () => {
     setIsLoading(true);
 
     try {
-      const { data, error } = await supabase.auth.signInWithPassword({
-        email,
-        password,
-      });
+      // Buscar usuario en nuestra tabla personalizada
+      const { data: userData, error: userError } = await supabase
+        .from('users')
+        .select('*')
+        .eq('email', email)
+        .eq('is_active', true)
+        .single();
 
-      if (error) {
+      if (userError || !userData) {
         toast({
           title: 'Error de autenticación',
-          description: error.message,
+          description: 'Usuario no encontrado o inactivo',
           status: 'error',
           duration: 5000,
           isClosable: true,
         });
-      } else {
+        return;
+      }
+
+      // Verificar contraseña
+      const isValidPassword = await bcrypt.compare(password, userData.password_hash);
+      
+      if (!isValidPassword) {
         toast({
-          title: '¡Bienvenido!',
-          description: 'Has iniciado sesión correctamente',
-          status: 'success',
-          duration: 3000,
+          title: 'Error de autenticación',
+          description: 'Contraseña incorrecta',
+          status: 'error',
+          duration: 5000,
           isClosable: true,
         });
-        // Redirigir al usuario al home
-        router.push('/');
-        console.log('Usuario autenticado:', data?.user);
+        return;
       }
-    } catch {
+
+      // Login exitoso
+      toast({
+        title: '¡Bienvenido!',
+        description: `Hola ${userData.full_name}`,
+        status: 'success',
+        duration: 3000,
+        isClosable: true,
+      });
+      
+      // Guardar usuario en localStorage para simular sesión
+      localStorage.setItem('user', JSON.stringify({
+        id: userData.id,
+        email: userData.email,
+        full_name: userData.full_name,
+        role: userData.role
+      }));
+      
+      // Redirigir al usuario al home
+      router.push('/');
+      console.log('Usuario autenticado:', userData);
+      
+    } catch (error) {
+      console.error('Error en login:', error);
       toast({
         title: 'Error inesperado',
         description: 'Ocurrió un error al intentar iniciar sesión',

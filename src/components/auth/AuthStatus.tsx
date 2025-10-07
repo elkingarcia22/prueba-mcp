@@ -21,9 +21,8 @@ import Link from 'next/link';
 interface User {
   id: string;
   email: string;
-  user_metadata?: {
-    full_name?: string;
-  };
+  full_name: string;
+  role: string;
 }
 
 export const AuthStatus: React.FC = () => {
@@ -34,28 +33,42 @@ export const AuthStatus: React.FC = () => {
   const borderColor = useColorModeValue('gray.200', 'gray.600');
 
   useEffect(() => {
-    // Obtener sesión actual
-    const getSession = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
-      setUser(session?.user || null);
+    // Obtener usuario del localStorage
+    const getStoredUser = () => {
+      try {
+        const storedUser = localStorage.getItem('user');
+        if (storedUser) {
+          setUser(JSON.parse(storedUser));
+        }
+      } catch (error) {
+        console.error('Error al obtener usuario del localStorage:', error);
+      }
       setLoading(false);
     };
 
-    getSession();
+    getStoredUser();
 
-    // Escuchar cambios en la autenticación
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      (event, session) => {
-        setUser(session?.user || null);
-        setLoading(false);
+    // Escuchar cambios en el localStorage
+    const handleStorageChange = (e: StorageEvent) => {
+      if (e.key === 'user') {
+        if (e.newValue) {
+          setUser(JSON.parse(e.newValue));
+        } else {
+          setUser(null);
+        }
       }
-    );
+    };
 
-    return () => subscription.unsubscribe();
+    window.addEventListener('storage', handleStorageChange);
+    
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+    };
   }, []);
 
-  const handleSignOut = async () => {
-    await supabase.auth.signOut();
+  const handleSignOut = () => {
+    localStorage.removeItem('user');
+    setUser(null);
     router.push('/');
   };
 
@@ -93,15 +106,15 @@ export const AuthStatus: React.FC = () => {
         <HStack spacing={3}>
           <Avatar 
             size="sm" 
-            name={user.user_metadata?.full_name || user.email}
+            name={user.full_name || user.email}
             bg="brand.500"
           />
           <VStack align="start" spacing={0}>
             <Text fontSize="sm" fontWeight="semibold">
-              {user.user_metadata?.full_name || 'Usuario'}
+              {user.full_name || 'Usuario'}
             </Text>
             <Text fontSize="xs" color="gray.500">
-              {user.email}
+              {user.email} • {user.role}
             </Text>
           </VStack>
         </HStack>
