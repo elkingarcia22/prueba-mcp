@@ -31,7 +31,8 @@ export default function RootLayout({
           {children}
           
           {/* Microsoft Clarity Analytics */}
-          {process.env.NEXT_PUBLIC_CLARITY_PROJECT_ID ? (
+          {process.env.NEXT_PUBLIC_CLARITY_PROJECT_ID && 
+           process.env.NEXT_PUBLIC_CLARITY_PROJECT_ID !== 'your_clarity_project_id_here' ? (
             <Script 
               id="ms-clarity" 
               strategy="afterInteractive"
@@ -44,8 +45,8 @@ export default function RootLayout({
                   })(window, document, "clarity", "script", "${process.env.NEXT_PUBLIC_CLARITY_PROJECT_ID}");
                 `
               }}
-                        />
-                      ) : null}
+            />
+          ) : null}
                     </ThemeProvider>
       </body>
     </html>
