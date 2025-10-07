@@ -20,21 +20,30 @@ npm install
 
 ### 2. Configurar variables de entorno
 ```bash
-cp env.example .env.local
+cp .env.example .env.local
 # Edita .env.local con tus claves API
 ```
 
-### 3. Compilar tokens del Design System
+### 3. Configurar Supabase
+1. Crea un proyecto en [Supabase](https://supabase.com/)
+2. Ejecuta el SQL del archivo `supabase-schema.sql` en el SQL Editor
+3. Copia la URL y Anon Key a tu `.env.local`
+
+### 4. Compilar tokens del Design System
 ```bash
 npm run tokens
 ```
 
-### 4. Iniciar desarrollo
+### 5. Iniciar desarrollo
 ```bash
 npm run dev
 ```
 
-### 5. Abrir Storybook (en otra terminal)
+### 6. Probar autenticación
+- Ve a `http://localhost:3000/login`
+- Usa: `egarcia@gmail.com` / `contraseña123456`
+
+### 7. Abrir Storybook (en otra terminal)
 ```bash
 npm run storybook
 ```

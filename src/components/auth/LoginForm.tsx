@@ -21,6 +21,7 @@ import {
 } from '@chakra-ui/react';
 import { ViewIcon, ViewOffIcon, SunIcon, MoonIcon } from '@chakra-ui/icons';
 import { supabase } from '../../lib/supabase';
+import { useRouter } from 'next/navigation';
 
 export const LoginForm: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -29,6 +30,7 @@ export const LoginForm: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const { colorMode, toggleColorMode } = useColorMode();
   const toast = useToast();
+  const router = useRouter();
 
   const bgColor = useColorModeValue('white', 'gray.800');
   const borderColor = useColorModeValue('gray.200', 'gray.600');
@@ -59,7 +61,8 @@ export const LoginForm: React.FC = () => {
           duration: 3000,
           isClosable: true,
         });
-        // Aquí podrías redirigir al usuario
+        // Redirigir al usuario al home
+        router.push('/');
         console.log('Usuario autenticado:', data?.user);
       }
     } catch {
