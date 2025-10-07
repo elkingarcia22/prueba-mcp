@@ -50,9 +50,10 @@ export const LoginForm: React.FC = () => {
         .single();
 
       if (userError || !userData) {
+        console.error('Error al buscar usuario:', userError);
         toast({
           title: 'Error de autenticación',
-          description: 'Usuario no encontrado o inactivo',
+          description: userError ? `Error: ${userError.message}` : 'Usuario no encontrado o inactivo',
           status: 'error',
           duration: 5000,
           isClosable: true,
