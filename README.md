@@ -1,36 +1,181 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🚀 Proyecto MCP + Design System
 
-## Getting Started
+Proyecto Next.js completo con MCPs conectados, Chakra UI, Storybook y tokens del Design System.
 
-First, run the development server:
+## ✨ Características
 
+- **🎨 Design System**: Chakra UI + Style Dictionary + Tokens CSS
+- **📚 Storybook**: Documentación visual de componentes
+- **🔌 MCPs**: Tavily, Firecrawl, GitHub, Supabase conectados
+- **📊 Analytics**: Microsoft Clarity integrado
+- **⚡ Performance**: Next.js 15 + TypeScript + Tailwind
+- **♿ Accesibilidad**: ESLint + Storybook a11y
+
+## 🚀 Inicio rápido
+
+### 1. Instalar dependencias
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. Configurar variables de entorno
+```bash
+cp env.example .env.local
+# Edita .env.local con tus claves API
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 3. Compilar tokens del Design System
+```bash
+npm run tokens
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 4. Iniciar desarrollo
+```bash
+npm run dev
+```
 
-## Learn More
+### 5. Abrir Storybook (en otra terminal)
+```bash
+npm run storybook
+```
 
-To learn more about Next.js, take a look at the following resources:
+## 📋 Comandos disponibles
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+# Desarrollo
+npm run dev                 # Servidor de desarrollo Next.js
+npm run storybook          # Servidor de Storybook
+npm run build              # Build de producción
+npm run lint               # Linter ESLint
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+# Tokens y Design System
+npm run tokens             # Compilar tokens con Style Dictionary
+npm run tokens:watch       # Watch mode para tokens
 
-## Deploy on Vercel
+# Testing
+npm run test               # Tests con Vitest
+npm run test:ui            # UI de tests
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🔧 Configuración de MCPs
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### 1. Configurar Cursor
+El archivo `.cursor/mcp.json` ya está configurado con todos los servidores MCP. Solo necesitas:
+
+1. Activar "Manual tool approval" en Cursor
+2. Configurar las claves API en las variables de entorno
+
+### 2. Claves API necesarias
+
+- **Tavily**: [https://tavily.com/](https://tavily.com/)
+- **Firecrawl**: [https://firecrawl.dev/](https://firecrawl.dev/)
+- **GitHub**: [https://github.com/settings/tokens](https://github.com/settings/tokens)
+- **Clarity**: [https://clarity.microsoft.com/](https://clarity.microsoft.com/)
+
+## 🎨 Design System
+
+### Tokens
+Los tokens se definen en `tokens/` y se compilan a:
+- `src/styles/tokens.css` - Variables CSS
+- `src/styles/tokens.ts` - Tipos TypeScript
+
+### Componentes
+- `src/components/ui/` - Componentes base
+- Cada componente tiene su `.stories.tsx` en Storybook
+
+### Tema
+- `src/theme/theme.ts` - Configuración de Chakra UI
+- Mapea tokens CSS a propiedades de Chakra
+
+## 📚 Storybook
+
+Accede a [http://localhost:6006](http://localhost:6006) para ver:
+- Documentación de componentes
+- Controles interactivos
+- Tests de accesibilidad
+- Variantes y estados
+
+## 🔌 Conectar servicios
+
+### GitHub
+```bash
+gh auth login
+gh repo create <owner>/<project> --private --source=. --remote=origin --push
+```
+
+### Vercel + Clarity
+```bash
+vercel link --project <project>
+printf "%s\n" "<CLARITY_ID>" | vercel env add NEXT_PUBLIC_CLARITY_PROJECT_ID development
+printf "%s\n" "<CLARITY_ID>" | vercel env add NEXT_PUBLIC_CLARITY_PROJECT_ID preview
+printf "%s\n" "<CLARITY_ID>" | vercel env add NEXT_PUBLIC_CLARITY_PROJECT_ID production
+```
+
+### Supabase (opcional)
+```bash
+npm i -g supabase
+supabase init
+supabase link --project-ref <your-ref>
+```
+
+## 🧪 Smoke tests
+
+Ejecuta estos comandos en Cursor para verificar MCPs:
+
+1. **Tavily**: "Busca 3 artículos recientes sobre onboarding"
+2. **Firecrawl**: "Crawlea esta URL y devuélveme un resumen"
+3. **GitHub**: "Crea un issue 'Definir tokens v1'"
+4. **Storybook**: "Lista componentes y props de Button"
+5. **Chakra**: "Crea Card con variants usando tokens"
+
+## 📁 Estructura del proyecto
+
+```
+src/
+├── components/          # Componentes UI reutilizables
+│   └── ui/             # Componentes base (Button, Card, etc.)
+├── theme/              # Configuración del tema Chakra
+├── styles/             # Tokens CSS y estilos globales
+├── app/                # Páginas de Next.js App Router
+└── lib/                # Utilidades y helpers
+
+tokens/                 # Tokens del Design System
+├── core.colors.json    # Colores
+├── core.typography.json # Tipografía
+└── core.spacing.json   # Espaciados y radios
+
+.cursor/                # Configuración de Cursor
+├── mcp.json           # Servidores MCP
+└── rules/             # Reglas del agente
+```
+
+## 🎯 Estándares
+
+- **Conventional Commits**: `feat/fix/chore/docs/test`
+- **Reutiliza componentes del DS**; no dupliques estilos
+- **Usa tokens, no valores fijos**
+- **Genera story por componente**
+- **Accesibilidad obligatoria**
+
+## 📖 Documentación
+
+- [AGENTS.md](./AGENTS.md) - Guía completa del proyecto
+- [Storybook](http://localhost:6006) - Documentación de componentes
+- [Tokens CSS](./src/styles/tokens.css) - Variables generadas
+
+## 🚀 Deploy
+
+### Vercel
+```bash
+vercel --prod
+```
+
+### Build local
+```bash
+npm run build
+npm run start
+```
+
+---
+
+**¡Listo!** Tu proyecto está configurado con todas las herramientas modernas para desarrollo eficiente. 🎉

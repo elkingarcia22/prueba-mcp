@@ -1,0 +1,54 @@
+# Storybook = contrato visual
+
+## Por cada componente
+- Genera `{Componente}.stories.tsx` con variants/states
+- Usa Controls para props y añade notas de a11y
+- Adjunta enlaces a stories en PRs
+
+## Estructura de stories
+```tsx
+// Ejemplo: Button.stories.tsx
+import type { Meta, StoryObj } from '@storybook/react';
+import { Button } from './Button';
+
+const meta: Meta<typeof Button> = {
+  title: 'Components/Button',
+  component: Button,
+  parameters: {
+    docs: {
+      description: {
+        component: 'Botón reutilizable con variantes de marca'
+      }
+    }
+  },
+  argTypes: {
+    variant: {
+      control: { type: 'select' },
+      options: ['solid', 'outline', 'ghost'],
+      description: 'Variante visual del botón'
+    },
+    colorScheme: {
+      control: { type: 'select' },
+      options: ['brand', 'gray'],
+      description: 'Esquema de colores'
+    }
+  }
+};
+
+export default meta;
+type Story = StoryObj<typeof meta>;
+
+export const Primary: Story = {
+  args: {
+    variant: 'solid',
+    colorScheme: 'brand',
+    children: 'Botón primario'
+  }
+};
+```
+
+## Documentación
+- Incluye descripción del componente
+- Documenta todas las props con argTypes
+- Añade ejemplos de uso
+- Incluye notas de accesibilidad

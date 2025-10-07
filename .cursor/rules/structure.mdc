@@ -1,0 +1,39 @@
+# Estructura del proyecto
+
+## Organización de carpetas
+```
+src/
+├── components/          # Componentes UI reutilizables
+│   ├── ui/             # Componentes base (Button, Input, etc.)
+│   └── layout/         # Componentes de layout
+├── theme/              # Configuración del tema Chakra
+├── styles/             # Tokens CSS y estilos globales
+├── lib/                # Utilidades y helpers
+├── hooks/              # Custom hooks
+└── app/                # Páginas de Next.js App Router
+```
+
+## Principios
+- **No mezclar lógica de datos dentro de la UI**
+- **Separar componentes presentacionales de contenedores**
+- **Usar TypeScript estricto para todas las interfaces**
+- **Mantener componentes pequeños y enfocados**
+
+## Convenciones de nombres
+- Componentes: PascalCase (`Button`, `UserCard`)
+- Hooks: camelCase con prefijo `use` (`useAuth`, `useLocalStorage`)
+- Utilidades: camelCase (`formatDate`, `validateEmail`)
+- Archivos de stories: `{Component}.stories.tsx`
+
+## Imports
+```tsx
+// ✅ Correcto - imports organizados
+import { Button, Input } from '@/components/ui';
+import { useAuth } from '@/hooks/useAuth';
+import { formatDate } from '@/lib/utils';
+
+// ❌ Incorrecto - imports desordenados
+import { formatDate } from '@/lib/utils';
+import { Button } from '@/components/ui/Button';
+import { useAuth } from '@/hooks/useAuth';
+```

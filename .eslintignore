@@ -1,0 +1,10 @@
+node_modules/
+.next/
+out/
+build/
+next-env.d.ts
+src/styles/tokens.ts
+src/styles/tokens.css
+src/stories/
+**/*.stories.tsx
+**/*.stories.ts

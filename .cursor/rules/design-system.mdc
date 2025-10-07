@@ -1,0 +1,32 @@
+# Design System (Chakra + tokens)
+
+## Principios fundamentales
+- **Reutiliza componentes Chakra** antes de crear nuevos componentes desde cero
+- **No hardcodees colores/espaciados**: usa tokens del tema o CSS variables
+- **Las variantes deben mapearse a tokens**: brand, radii, space, typography
+- **Accesibilidad obligatoria**: roles/aria/focus visible/contraste AA
+
+## Tokens y tema
+- Usa `theme.colors.brand.*` en lugar de colores hex
+- Aplica `theme.space.*` para espaciados consistentes
+- Implementa `theme.radii.*` para border-radius
+- Utiliza `theme.fontSizes.*` y `theme.fontWeights.*` para tipografía
+
+## Componentes
+- Extiende componentes Chakra existentes con `extendTheme`
+- Crea variantes usando el sistema de tokens
+- Documenta todas las props en Storybook
+- Incluye estados de accesibilidad (focus, hover, disabled)
+
+## Ejemplo de uso correcto:
+```tsx
+// ✅ Correcto - usando tokens
+<Button colorScheme="brand" size="md" borderRadius="md">
+  Acción
+</Button>
+
+// ❌ Incorrecto - hardcodeado
+<Button bg="#0C5BEF" px="16px" borderRadius="8px">
+  Acción
+</Button>
+```

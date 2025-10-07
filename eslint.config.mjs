@@ -1,3 +1,6 @@
+// For more info, see https://github.com/storybookjs/eslint-plugin-storybook#configuration-flat-config-format
+import storybook from "eslint-plugin-storybook";
+
 import { dirname } from "path";
 import { fileURLToPath } from "url";
 import { FlatCompat } from "@eslint/eslintrc";
@@ -10,7 +13,7 @@ const compat = new FlatCompat({
 });
 
 const eslintConfig = [
-  ...compat.extends("next/core-web-vitals", "next/typescript"),
+  ...compat.extends("next/core-web-vitals", "next/typescript"), 
   {
     ignores: [
       "node_modules/**",
@@ -18,8 +21,25 @@ const eslintConfig = [
       "out/**",
       "build/**",
       "next-env.d.ts",
+      "src/styles/tokens.ts",
+      "src/styles/tokens.css",
+      "**/*.stories.tsx",
+      "**/*.stories.ts",
+      "src/components/ui/*.stories.tsx",
     ],
+    rules: {
+      'no-restricted-syntax': [
+        'error',
+        { 
+          selector: "Literal[value=/^#([0-9a-fA-F]{3}){1,2}$/]", 
+          message: 'No uses colores hex hardcodeados; usa tokens del tema (theme.colors.*) o CSS variables' 
+        }
+      ],
+      '@typescript-eslint/triple-slash-reference': 'off',
+      'storybook/no-renderer-packages': 'off'
+    }
   },
+  ...storybook.configs["flat/recommended"]
 ];
 
 export default eslintConfig;

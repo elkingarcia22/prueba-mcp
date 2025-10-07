@@ -1,103 +1,156 @@
-import Image from "next/image";
+import { 
+  Box, 
+  Container, 
+  Heading, 
+  Text, 
+  VStack, 
+  HStack, 
+  Button, 
+  Card, 
+  CardBody, 
+  CardHeader,
+  SimpleGrid,
+  Code,
+  useColorModeValue,
+  IconButton,
+  useColorMode,
+} from '@chakra-ui/react';
+import { SunIcon, MoonIcon } from '@chakra-ui/icons';
+import Link from 'next/link';
 
 export default function Home() {
-  return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  const { colorMode, toggleColorMode } = useColorMode();
+  const bgColor = useColorModeValue('gray.50', 'gray.900');
+  const cardBg = useColorModeValue('white', 'gray.800');
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
+  return (
+    <Box minH="100vh" bg={bgColor}>
+      <Container maxW="container.xl" py={8}>
+        <VStack spacing={8} align="stretch">
+          {/* Header */}
+          <Box textAlign="center" position="relative">
+            <IconButton
+              aria-label="Toggle color mode"
+              icon={colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
+              onClick={toggleColorMode}
+              variant="ghost"
+              position="absolute"
+              top={0}
+              right={0}
             />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+            
+            <Heading size="2xl" color="brand.500" mb={4}>
+              Proyecto con MCP + Design System
+            </Heading>
+            <Text fontSize="xl" color="gray.600" mb={8}>
+              Next.js 15 + Chakra UI + Storybook + Tokens + MCPs + Supabase
+            </Text>
+            
+            <HStack spacing={4} justify="center" flexWrap="wrap">
+              <Button as={Link} href="/login" colorScheme="brand" size="lg">
+                🔐 Ir al Login
+              </Button>
+              <Button as="a" href="http://localhost:6006" target="_blank" variant="outline" size="lg">
+                📚 Ver Storybook
+              </Button>
+              <Button as="a" href="https://github.com/elkingarcia22/prueba-mcp" target="_blank" variant="ghost" size="lg">
+                🐙 GitHub
+              </Button>
+            </HStack>
+          </Box>
+
+          {/* Features Grid */}
+          <SimpleGrid columns={{ base: 1, md: 3 }} spacing={6}>
+            <Card bg={cardBg}>
+              <CardHeader>
+                <Heading size="md" color="brand.500">
+                  🚀 MCPs Configurados
+                </Heading>
+                <Text fontSize="sm" color="gray.600">
+                  Tavily, Firecrawl, GitHub, Storybook, Supabase
+                </Text>
+              </CardHeader>
+              <CardBody>
+                <Text mb={4}>
+                  Todos los MCPs están configurados y listos para usar. Activa "Manual tool approval" en Cursor.
+                </Text>
+                <Button colorScheme="brand" size="sm">
+                  Probar MCPs
+                </Button>
+              </CardBody>
+            </Card>
+
+            <Card bg={cardBg}>
+              <CardHeader>
+                <Heading size="md" color="brand.500">
+                  🎨 Design System
+                </Heading>
+                <Text fontSize="sm" color="gray.600">
+                  Tokens + Chakra UI + Storybook
+                </Text>
+              </CardHeader>
+              <CardBody>
+                <Text mb={4}>
+                  Sistema de diseño completo con tokens compilados, componentes reutilizables y documentación.
+                </Text>
+                <Button variant="outline" colorScheme="brand" size="sm">
+                  Ver Componentes
+                </Button>
+              </CardBody>
+            </Card>
+
+            <Card bg={cardBg}>
+              <CardHeader>
+                <Heading size="md" color="brand.500">
+                  🔐 Autenticación
+                </Heading>
+                <Text fontSize="sm" color="gray.600">
+                  Supabase Auth + Modo Claro/Oscuro
+                </Text>
+              </CardHeader>
+              <CardBody>
+                <Text mb={4}>
+                  Sistema de login completo con Supabase, modo claro/oscuro y componentes de Chakra UI.
+                </Text>
+                <Button as={Link} href="/login" colorScheme="brand" size="sm">
+                  Probar Login
+                </Button>
+              </CardBody>
+            </Card>
+          </SimpleGrid>
+
+          {/* Smoke Tests */}
+          <Card bg={cardBg}>
+            <CardHeader>
+              <Heading size="md" color="brand.500">
+                🧪 Smoke Tests
+              </Heading>
+              <Text fontSize="sm" color="gray.600">
+                Ejecuta estos comandos en Cursor para probar los MCPs
+              </Text>
+            </CardHeader>
+            <CardBody>
+              <VStack spacing={2} align="stretch">
+                <Code p={2} fontSize="sm">
+                  Tavily: "Busca 3 artículos recientes sobre onboarding"
+                </Code>
+                <Code p={2} fontSize="sm">
+                  Firecrawl: "Crawlea esta URL y devuélveme un resumen"
+                </Code>
+                <Code p={2} fontSize="sm">
+                  GitHub: "Crea un issue 'Definir tokens v1'"
+                </Code>
+                <Code p={2} fontSize="sm">
+                  Storybook: "Lista componentes y props de Button"
+                </Code>
+                <Code p={2} fontSize="sm">
+                  Supabase: "Lista tablas y genera 3 consultas read-only"
+                </Code>
+              </VStack>
+            </CardBody>
+          </Card>
+        </VStack>
+      </Container>
+    </Box>
   );
 }
