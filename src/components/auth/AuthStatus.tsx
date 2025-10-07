@@ -14,7 +14,6 @@ import {
   MenuItem,
   useColorModeValue,
 } from '@chakra-ui/react';
-import { supabase } from '../../lib/supabase';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 

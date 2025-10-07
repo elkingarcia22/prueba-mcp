@@ -145,10 +145,10 @@ export const LoginForm: React.FC = () => {
       
     } catch (error) {
       console.error('💥 Error inesperado en login:', error);
-      console.error('💥 Error stack:', error.stack);
+      console.error('💥 Error stack:', error instanceof Error ? error.stack : 'No stack available');
       toast({
         title: 'Error inesperado',
-        description: `Error: ${error.message}`,
+        description: `Error: ${error instanceof Error ? error.message : 'Error desconocido'}`,
         status: 'error',
         duration: 8000,
         isClosable: true,
