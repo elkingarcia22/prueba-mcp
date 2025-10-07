@@ -1,6 +1,6 @@
 import type { Preview } from '@storybook/nextjs-vite';
 import '../src/styles/tokens.css';
-import { ChakraProvider } from '@chakra-ui/react';
+import { ThemeProvider } from '../src/components/ThemeProvider';
 import React from 'react';
 
 const preview: Preview = {
@@ -22,7 +22,7 @@ const preview: Preview = {
     }
   },
   decorators: [
-    (Story) => React.createElement(Story),
+    (Story) => React.createElement(ThemeProvider, {}, React.createElement(Story)),
   ],
 };
 

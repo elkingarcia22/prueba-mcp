@@ -60,9 +60,9 @@ export const LoginForm: React.FC = () => {
           isClosable: true,
         });
         // Aquí podrías redirigir al usuario
-        console.log('Usuario autenticado:', data.user);
+        console.log('Usuario autenticado:', data?.user);
       }
-    } catch (error) {
+    } catch {
       toast({
         title: 'Error inesperado',
         description: 'Ocurrió un error al intentar iniciar sesión',
@@ -79,7 +79,7 @@ export const LoginForm: React.FC = () => {
     setIsLoading(true);
 
     try {
-      const { data, error } = await supabase.auth.signUp({
+      const { error } = await supabase.auth.signUp({
         email,
         password,
       });
@@ -101,7 +101,7 @@ export const LoginForm: React.FC = () => {
           isClosable: true,
         });
       }
-    } catch (error) {
+    } catch {
       toast({
         title: 'Error inesperado',
         description: 'Ocurrió un error al intentar registrarse',

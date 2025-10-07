@@ -3,8 +3,8 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import "../styles/tokens.css";
 import Script from "next/script";
-import { ChakraProvider, ColorModeScript } from '@chakra-ui/react';
-import theme from '../theme/theme';
+import { ColorModeScript } from '@chakra-ui/react';
+import { ThemeProvider } from '../components/ThemeProvider';
 
 const inter = Inter({
   subsets: ["latin"],
@@ -23,11 +23,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es" suppressHydrationWarning>
-      <head>
-        <ColorModeScript initialColorMode={theme.config.initialColorMode} />
-      </head>
-      <body className={`${inter.variable} antialiased`}>
-        <ChakraProvider theme={theme}>
+                  <head>
+                    <ColorModeScript initialColorMode="system" />
+                  </head>
+                  <body className={`${inter.variable} antialiased`}>
+                    <ThemeProvider>
           {children}
           
           {/* Microsoft Clarity Analytics */}
@@ -44,9 +44,9 @@ export default function RootLayout({
                   })(window, document, "clarity", "script", "${process.env.NEXT_PUBLIC_CLARITY_PROJECT_ID}");
                 `
               }}
-            />
-          ) : null}
-        </ChakraProvider>
+                        />
+                      ) : null}
+                    </ThemeProvider>
       </body>
     </html>
   );

@@ -1,3 +1,5 @@
+"use client";
+
 import { 
   Box, 
   Container, 
@@ -72,7 +74,7 @@ export default function Home() {
               </CardHeader>
               <CardBody>
                 <Text mb={4}>
-                  Todos los MCPs están configurados y listos para usar. Activa "Manual tool approval" en Cursor.
+                  Todos los MCPs están configurados y listos para usar. Activa &quot;Manual tool approval&quot; en Cursor.
                 </Text>
                 <Button colorScheme="brand" size="sm">
                   Probar MCPs
@@ -132,19 +134,19 @@ export default function Home() {
             <CardBody>
               <VStack spacing={2} align="stretch">
                 <Code p={2} fontSize="sm">
-                  Tavily: "Busca 3 artículos recientes sobre onboarding"
+                  Tavily: &quot;Busca 3 artículos recientes sobre onboarding&quot;
                 </Code>
                 <Code p={2} fontSize="sm">
-                  Firecrawl: "Crawlea esta URL y devuélveme un resumen"
+                  Firecrawl: &quot;Crawlea esta URL y devuélveme un resumen&quot;
                 </Code>
                 <Code p={2} fontSize="sm">
-                  GitHub: "Crea un issue 'Definir tokens v1'"
+                  GitHub: &quot;Crea un issue &apos;Definir tokens v1&apos;&quot;
                 </Code>
                 <Code p={2} fontSize="sm">
-                  Storybook: "Lista componentes y props de Button"
+                  Storybook: &quot;Lista componentes y props de Button&quot;
                 </Code>
                 <Code p={2} fontSize="sm">
-                  Supabase: "Lista tablas y genera 3 consultas read-only"
+                  Supabase: &quot;Lista tablas y genera 3 consultas read-only&quot;
                 </Code>
               </VStack>
             </CardBody>

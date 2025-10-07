@@ -5,7 +5,8 @@ const config: ThemeConfig = {
   useSystemColorMode: true,
 };
 
-const theme = extendTheme({
+// Crear el tema de forma lazy para evitar problemas de SSR
+const createTheme = () => extendTheme({
   config,
   colors: {
     brand: {
@@ -21,26 +22,13 @@ const theme = extendTheme({
       900: 'var(--color-brand-900)',
       950: 'var(--color-brand-950)',
     },
-    gray: {
-      50: 'var(--color-gray-50)',
-      100: 'var(--color-gray-100)',
-      200: 'var(--color-gray-200)',
-      300: 'var(--color-gray-300)',
-      400: 'var(--color-gray-400)',
-      500: 'var(--color-gray-500)',
-      600: 'var(--color-gray-600)',
-      700: 'var(--color-gray-700)',
-      800: 'var(--color-gray-800)',
-      900: 'var(--color-gray-900)',
-      950: 'var(--color-gray-950)',
-    },
   },
   fonts: {
     heading: 'var(--font-family-sans)',
     body: 'var(--font-family-sans)',
   },
   styles: {
-    global: (props: any) => ({
+    global: (props: { colorMode: string }) => ({
       body: {
         bg: props.colorMode === 'dark' ? 'gray.900' : 'white',
         color: props.colorMode === 'dark' ? 'white' : 'gray.900',
@@ -88,5 +76,16 @@ const theme = extendTheme({
     },
   },
 });
+
+// Exportar una función que crea el tema cuando se necesita
+export const getTheme = createTheme;
+
+// Para compatibilidad, también exportar el tema directamente
+// pero solo en el cliente
+let theme: ReturnType<typeof createTheme> | null = null;
+
+if (typeof window !== 'undefined') {
+  theme = createTheme();
+}
 
 export default theme;
