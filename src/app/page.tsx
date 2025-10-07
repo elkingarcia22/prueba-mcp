@@ -20,6 +20,7 @@ import {
 import { SunIcon, MoonIcon } from '@chakra-ui/icons';
 import Link from 'next/link';
 import { AuthStatus } from '../components/auth/AuthStatus';
+import { NoSSR } from '../components/NoSSR';
 
 export default function Home() {
   const { colorMode, toggleColorMode } = useColorMode();
@@ -31,7 +32,9 @@ export default function Home() {
       <Container maxW="container.xl" py={8}>
         <VStack spacing={8} align="stretch">
           {/* Auth Status */}
-          <AuthStatus />
+          <NoSSR>
+            <AuthStatus />
+          </NoSSR>
           
           {/* Header */}
           <Box textAlign="center" position="relative">
