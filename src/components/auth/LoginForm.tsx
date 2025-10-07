@@ -40,7 +40,14 @@ export const LoginForm: React.FC = () => {
     e.preventDefault();
     setIsLoading(true);
 
+    console.log('🔐 Iniciando proceso de login...');
+    console.log('📧 Email:', email);
+    console.log('🔑 Contraseña:', password ? '[PROVIDED]' : '[EMPTY]');
+
     try {
+      console.log('🔍 Buscando usuario en Supabase...');
+      console.log('🌐 Supabase URL:', process.env.NEXT_PUBLIC_SUPABASE_URL);
+      
       // Buscar usuario en nuestra tabla personalizada
       const { data: userData, error: userError } = await supabase
         .from('users')
@@ -49,11 +56,30 @@ export const LoginForm: React.FC = () => {
         .eq('is_active', true)
         .single();
 
-      if (userError || !userData) {
-        console.error('Error al buscar usuario:', userError);
+      console.log('📊 Resultado de la consulta:');
+      console.log('  - userData:', userData);
+      console.log('  - userError:', userError);
+      console.log('  - userError?.message:', userError?.message);
+      console.log('  - userError?.code:', userError?.code);
+      console.log('  - userError?.details:', userError?.details);
+
+      if (userError) {
+        console.error('❌ Error al buscar usuario:', userError);
         toast({
           title: 'Error de autenticación',
-          description: userError ? `Error: ${userError.message}` : 'Usuario no encontrado o inactivo',
+          description: `Error: ${userError.message} (Código: ${userError.code})`,
+          status: 'error',
+          duration: 8000,
+          isClosable: true,
+        });
+        return;
+      }
+
+      if (!userData) {
+        console.error('❌ Usuario no encontrado');
+        toast({
+          title: 'Error de autenticación',
+          description: 'Usuario no encontrado o inactivo',
           status: 'error',
           duration: 5000,
           isClosable: true,
@@ -61,10 +87,25 @@ export const LoginForm: React.FC = () => {
         return;
       }
 
+      console.log('✅ Usuario encontrado:', {
+        id: userData.id,
+        email: userData.email,
+        full_name: userData.full_name,
+        role: userData.role,
+        is_active: userData.is_active
+      });
+
+      console.log('🔐 Verificando contraseña...');
+      console.log('  - Password provided:', password);
+      console.log('  - Hash stored:', userData.password_hash);
+      
       // Verificar contraseña
       const isValidPassword = await bcrypt.compare(password, userData.password_hash);
       
+      console.log('🔑 Resultado de verificación de contraseña:', isValidPassword);
+      
       if (!isValidPassword) {
+        console.error('❌ Contraseña incorrecta');
         toast({
           title: 'Error de autenticación',
           description: 'Contraseña incorrecta',
@@ -75,6 +116,8 @@ export const LoginForm: React.FC = () => {
         return;
       }
 
+      console.log('🎉 Login exitoso!');
+      
       // Login exitoso
       toast({
         title: '¡Bienvenido!',
@@ -85,28 +128,34 @@ export const LoginForm: React.FC = () => {
       });
       
       // Guardar usuario en localStorage para simular sesión
-      localStorage.setItem('user', JSON.stringify({
+      const userSession = {
         id: userData.id,
         email: userData.email,
         full_name: userData.full_name,
         role: userData.role
-      }));
+      };
+      
+      console.log('💾 Guardando sesión en localStorage:', userSession);
+      localStorage.setItem('user', JSON.stringify(userSession));
       
       // Redirigir al usuario al home
+      console.log('🏠 Redirigiendo al home...');
       router.push('/');
-      console.log('Usuario autenticado:', userData);
+      console.log('✅ Usuario autenticado exitosamente:', userData);
       
     } catch (error) {
-      console.error('Error en login:', error);
+      console.error('💥 Error inesperado en login:', error);
+      console.error('💥 Error stack:', error.stack);
       toast({
         title: 'Error inesperado',
-        description: 'Ocurrió un error al intentar iniciar sesión',
+        description: `Error: ${error.message}`,
         status: 'error',
-        duration: 5000,
+        duration: 8000,
         isClosable: true,
       });
     } finally {
       setIsLoading(false);
+      console.log('🏁 Proceso de login finalizado');
     }
   };
 

@@ -35,15 +35,22 @@ export const AuthStatus: React.FC = () => {
   useEffect(() => {
     // Obtener usuario del localStorage
     const getStoredUser = () => {
+      console.log('🔍 AuthStatus: Obteniendo usuario del localStorage...');
       try {
         const storedUser = localStorage.getItem('user');
+        console.log('📦 AuthStatus: Usuario almacenado:', storedUser);
         if (storedUser) {
-          setUser(JSON.parse(storedUser));
+          const parsedUser = JSON.parse(storedUser);
+          console.log('✅ AuthStatus: Usuario parseado:', parsedUser);
+          setUser(parsedUser);
+        } else {
+          console.log('❌ AuthStatus: No hay usuario en localStorage');
         }
       } catch (error) {
-        console.error('Error al obtener usuario del localStorage:', error);
+        console.error('💥 AuthStatus: Error al obtener usuario del localStorage:', error);
       }
       setLoading(false);
+      console.log('🏁 AuthStatus: Carga completada');
     };
 
     getStoredUser();
