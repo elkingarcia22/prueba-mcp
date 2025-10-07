@@ -1,4 +1,4 @@
-# 🚀 Proyecto MCP + Design System
+# 🚀 MCP Design System App
 
 Proyecto Next.js completo con MCPs conectados, Chakra UI, Storybook y tokens del Design System.
 
