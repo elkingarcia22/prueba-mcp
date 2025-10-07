@@ -7,6 +7,8 @@ Proyecto Next.js completo con MCPs conectados, Chakra UI, Storybook y tokens del
 - **🎨 Design System**: Chakra UI + Style Dictionary + Tokens CSS
 - **📚 Storybook**: Documentación visual de componentes
 - **🔌 MCPs**: Tavily, Firecrawl, GitHub, Supabase conectados
+- **🔐 Autenticación**: Sistema de login completo con Supabase
+- **🌙 Modo Claro/Oscuro**: Toggle automático con Chakra UI
 - **📊 Analytics**: Microsoft Clarity integrado
 - **⚡ Performance**: Next.js 15 + TypeScript + Tailwind
 - **♿ Accesibilidad**: ESLint + Storybook a11y
@@ -127,6 +129,25 @@ supabase init
 supabase link --project-ref <your-ref>
 ```
 
+## 🔐 Sistema de Autenticación
+
+### Usuario de Prueba
+- **Email**: `egarcia@gmail.com`
+- **Contraseña**: `contraseña123456`
+- **Rol**: `admin`
+
+### Configuración de Supabase
+1. Ejecuta `supabase-setup.sql` en Supabase Dashboard
+2. Ejecuta `fix-password-hash.sql` para corregir el hash
+3. El sistema usa autenticación personalizada con tabla `users`
+
+### Características del Login
+- ✅ Validación de credenciales con bcrypt
+- ✅ Sesión persistente en localStorage
+- ✅ Modo claro/oscuro integrado
+- ✅ Redirección automática después del login
+- ✅ Manejo de errores detallado
+
 ## 🧪 Smoke tests
 
 Ejecuta estos comandos en Cursor para verificar MCPs:
@@ -135,7 +156,7 @@ Ejecuta estos comandos en Cursor para verificar MCPs:
 2. **Firecrawl**: "Crawlea esta URL y devuélveme un resumen"
 3. **GitHub**: "Crea un issue 'Definir tokens v1'"
 4. **Storybook**: "Lista componentes y props de Button"
-5. **Chakra**: "Crea Card con variants usando tokens"
+5. **Supabase**: "Lista tablas y genera 3 consultas read-only"
 
 ## 📁 Estructura del proyecto
 
